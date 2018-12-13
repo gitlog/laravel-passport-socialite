@@ -12,8 +12,14 @@
     "require": {
         "laravel/passport": "^4.0",
         "illuminate/support": "^5.0",
-        "schedula/league-oauth2-social" : "^1.0"
+        "schedula/league-oauth2-social" : "dev-master"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/gitlog/league-oauth2-social"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Schedula\\Laravel\\PassportSocialite\\": "src/"
