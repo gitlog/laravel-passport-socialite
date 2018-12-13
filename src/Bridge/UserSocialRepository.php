@@ -38,10 +38,18 @@ class UserSocialRepository implements UserSocialRepositoryInterface {
      /**
      * {@inheritdoc}
      */
-    public function getUserFromSocialProvider($accessToken, $socialProvider, $grantType, ClientEntityInterface $clientEntity){
+    public function getUserFromSocialProvider($accessToken, $socialProvider, $grantType, ClientEntityInterface $clientEntity, $secretToken = null){
         try {
             $socialite = Socialite::with($socialProvider);
-            $socialUser = $socialite->userFromToken($accessToken);
+            
+            if(method_exists($socialite, "userFromTokenAndSecret")) {
+
+                $socialUser = $socialite->userFromTokenAndSecret($accessToken, $secretToken);
+
+            } else {
+
+                $socialUser = $socialite->userFromToken($accessToken);
+            }
 
             $provider = config('auth.guards.api.provider');
             if (is_null($model = config('auth.providers.'.$provider.'.model'))) {
